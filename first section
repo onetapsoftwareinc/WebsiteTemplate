@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pinned Logo Scroll</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      overflow-x: hidden;
+    }
+    body {
+      height: 5000px;
+      background: #111;
+    }
+    .section {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding-top: 100px;
+    }
+    .logo {
+      position: fixed;
+      width: 500px;
+      height: auto;
+      top: 100px;
+      z-index: 10;
+      transform-origin: top center;
+    }
+    .content {
+      margin-top: 350px;
+      text-align: center;
+      color: #fff;
+      opacity: 0;
+    }
+    .content h1 {
+      font-size: 3rem;
+      margin: 0.5rem 0;
+    }
+    .content p {
+      font-size: 1.2rem;
+      margin: 0.5rem 0 1.5rem;
+    }
+    .content button {
+      padding: 0.8rem 2rem;
+      font-size: 1rem;
+      color: #fff;
+      background: linear-gradient(45deg, #000, #555);
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s, box-shadow 0.3s;
+      border-radius: 50px;
+      background-size: 200% 200%;
+      animation: gradientAnimation 4s ease infinite;
+      box-shadow: 0 0 10px rgba(211, 211, 211, 0.5);
+    }
+    .content button:hover {
+      background: linear-gradient(45deg, #333, #777);
+      box-shadow: 0 0 20px rgba(211, 211, 211, 0.7);
+    }
+    .scroll-icon {
+      position: fixed;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 50px;
+      opacity: 1;
+      z-index: 15;
+    }
+
+    @keyframes gradientAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/ScrollTrigger.min.js"></script>
+</head>
+<body>
+  <section class="section" id="pinned-section" style="background-image: url('https://www.onetapsoftware.com/wp-content/uploads/2024/10/Untitled-design-6.png'); background-size: cover; background-position: center;">
+    <img src="https://www.onetapsoftware.com/wp-content/uploads/2024/10/OOS-Logo-2.png" alt="Logo" class="logo" id="logo">
+    <div class="content" id="content">
+      <h1>Welcome to Luxe Hair Studio</h1>
+      <p>Experience the perfect blend of style, comfort, and elegance. Let our experts transform your look.</p>
+      <button>Book an Appointment</button>
+    </div>
+    <img src="https://www.onetapsoftware.com/wp-content/uploads/2024/10/scroll-down-icon-3.png" alt="Scroll Down Icon" class="scroll-icon" id="scroll-icon">
+  </section>
+  <script>
+    console.clear();
+
+    gsap.set("#logo", {scale: 1});
+    gsap.set("#content", {opacity: 0});
+
+    gsap.to("#logo", {
+      scale: 0.75,
+      ease: "power1.out",
+      scrollTrigger: {
+        trigger: "#pinned-section",
+        start: "top top",
+        end: "+=1000",
+        scrub: true,
+        pin: "#pinned-section"
+      }
+    });
+
+    gsap.to("#content", {
+      opacity: 1,
+      delay: 0.5,
+      scrollTrigger: {
+        trigger: "#pinned-section",
+        start: "top top",
+        end: "+=500",
+        scrub: true
+      }
+    });
+
+    gsap.to("#scroll-icon", {
+      opacity: 0,
+      scrollTrigger: {
+        trigger: "#pinned-section",
+        start: "top top",
+        end: "+=100",
+        scrub: true
+      }
+    });
+
+    gsap.fromTo("#scroll-icon", 
+      {y: 0},
+      {
+        y: 20,
+        repeat: -1,
+        yoyo: true,
+        ease: "power1.inOut",
+        duration: 1.5
+      });
+  </script>
+</body>
+</html>
