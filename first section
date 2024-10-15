@@ -15,7 +15,10 @@
       background: #111;
     }
     .section {
-      position: relative;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
       height: 100vh;
       display: flex;
       flex-direction: column;
@@ -105,8 +108,7 @@
         trigger: "#pinned-section",
         start: "top top",
         end: "+=1000",
-        scrub: true,
-        pin: "#pinned-section"
+        scrub: true
       }
     });
 
